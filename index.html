@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Artistic Lawyer</title>
+  <link rel="stylesheet" href="index.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+  <!-- Navigation Bar -->
+ <header>
+  <div class="logo">
+  <!-- <img src="./Assets/logo.png" alt="Artistic Lawyer Logo"> -->
+  <span>Artistic Lawyer</span>
+</div>
+
+  <nav class="nav-links" id="navLinks">
+    <ul>
+      <li><a href="#home">Home</a></li>
+      <li><a href="#gallery">Gallery</a></li>
+      <li class="dropdown">
+        <a href="#events">Events</a>
+        <ul class="dropdown-menu">
+          <li><a href="#events">Upcoming Events</a></li>
+          <li><a href="#events">Past Events</a></li>
+        </ul>
+      </li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#contact">Contact</a></li>
+      
+    </ul>
+  </nav>
+  <div class="hamburger" id="hamburger">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</header>
+
+
+  <!-- Hero Section -->
+  <section id="home" class="hero">
+    <video autoplay muted loop playsinline class="hero-bg">
+  <source src="./Assets/12.mp4" type="video/mp4">
+ 
+</video>
+
+    <div class="hero-content">
+      <h1>Welcome to <span>Artistic Lawyer</span></h1>
+      <p>Explore stunning paintings and drawings that bring imagination to life.</p>
+      <a href="#gallery" class="btn">Explore Gallery</a>
+    </div>
+  </section>
+
+  <!-- Gallery Section -->
+  <section id="gallery" class="gallery">
+    <h2>Art Gallery</h2>
+    <div class="gallery-items">
+      <!-- dynamic items will load here -->
+    </div>
+  </section>
+
+  <!-- About Section -->
+  <section id="about" class="about">
+    <h2>About the Artist</h2>
+    <p>Radhika Rungta is a passionate and imaginative painter whose work draws the viewer into a world of emotion, colour and storytelling. Her journey began with a fascination for light and landscape—transforming everyday moments into striking compositions. Through bold brush-strokes and a rich palette, Radhika captures the interplay between form and feeling, inviting an intimate connection with each viewer. Her artistic vision centres on the harmony between nature, human experience and artistic expression—each piece growing out of lived reflection and creative discovery. With a dedication to craft, authenticity and visual poetry, Radhika brings a unique voice to the art world, inviting you to explore, engage and be inspired.</p>
+  </section>
+
+  <section id="events" class="events">
+  <h2>Events & Exhibitions</h2>
+  <p class="events-intro">Join us at our upcoming exhibitions, live art sessions and gallery-showcases where you can meet the artist, explore new works and enjoy immersive art experiences.</p>
+  <div class="events-items">
+    <div class="event-item">
+      <img src="./Assets/event 1.jpg" alt="Art Exhibition 1">
+      <div class="event-info">
+        <h3>Solo Exhibition: Radhika Rungta</h3>
+        <p>Date: 10 Dec 2025 | Venue: City Art Gallery</p>
+      </div>
+    </div>
+    <div class="event-item">
+      <img src="./Assets/event 2.webp" alt="Live Painting Workshop">
+      <div class="event-info">
+        <h3>Live Painting Workshop</h3>
+        <p>Date: 20 Jan 2026 | Venue: Studio 5, Raipur</p>
+      </div>
+    </div>
+    <div class="event-item">
+      <img src="./Assets/event 3.jpg" alt="Art Meet & Greet">
+      <div class="event-info">
+        <h3>Art Meet & Greet Evening</h3>
+        <p>Date: 15 Feb 2026 | Venue: INOX Cinema Lounge</p>
+      </div>
+    </div>
+  </div>
+</section>
+  
+
+  <!-- Footer -->
+  <footer class="site-footer" id="contact" >
+    <div class="footer-wrapper">
+      <h3 class="footer-heading">Get in Touch with Us</h3>
+      <div class="footer-contacts">
+        <div class="contact-item"><i class="fas fa-phone"></i> <a href="tel:+911234567890">+91 123-456-7890</a></div>
+        <div class="contact-item"><i class="fas fa-envelope"></i> <a href="mailto:hello@artisticlawyer.com">hello@artisticlawyer.com</a></div>
+      </div>
+      <div class="social-icons">
+        <a href="#" target="_blank"><i class="fab fa-facebook-f"></i></a>
+        <a href="#" target="_blank"><i class="fab fa-instagram"></i></a>
+        <a href="#" target="_blank"><i class="fab fa-snapchat"></i></a>
+
+      </div>
+      <p class="footer-copyright">&copy; 2025 Artistic Lawyer. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script src="index.js"></script>
+ <script type="module">
+    // Hamburger toggle logic
+    const hamburger = document.getElementById('hamburger');
+    const navLinks   = document.getElementById('navLinks');
+    hamburger.addEventListener('click', () => {
+      navLinks.classList.toggle('active');
+    });
+
+
+      
+    import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm';
+
+    const SUPABASE_URL = 'https://dagrgakrvemvbiacgdrr.supabase.co';      
+    const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRhZ3JnYWtydmVtdmJpYWNnZHJyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjMwMTMwMDAsImV4cCI6MjA3ODU4OTAwMH0.NdDKUbH2UsCdEc9jW2Y-Puwt2Y379QA0vnNkRFH6-jw';           
+    const supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
+
+    async function loadGallery() {
+      const { data, error } = await supabase
+        .from('artworks')
+        .select('*')
+        .order('created_at', { ascending: false });
+
+      if (error) {
+        console.error("Error loading artworks:", error);
+        return;
+      }
+
+      const container = document.querySelector('.gallery-items');
+      container.innerHTML = data.map(a =>
+        `<div class="gallery-item">
+           ${a.type === 'image'
+             ? `<img src="${a.media_url}" alt="${a.title}">`
+             : `<video autoplay muted loop playsinline><source src="${a.media_url} " type="video/mp4"></video>`
+           }
+           <p><strong>${a.title}</strong></p>
+           <p>${a.description}</p>
+         </div>`
+      ).join('');
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      loadGallery();
+    });
+  </script>
+</body>
+</html>
+
+
+
+
+
+
+
