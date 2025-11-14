@@ -7,10 +7,18 @@
 
 /* Body */
 body {
-  font-family: "Poppins", sans-serif;
-  background-color: #0b0b0b;
-  color: #eee;
+  font-family: "Georgia", serif;
+  background-color: white;
+  color: #222;
   scroll-behavior: smooth;
+  line-height: 1.6;
+}
+
+/* Container for page content */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
 }
 
 /* Header */
@@ -18,101 +26,242 @@ header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 20px 40px;
-  background: rgba(10, 10, 10, 0.9);
-  color: #fff;
+  padding: 0px 40px;
+    background: linear-gradient(90deg, #ffccd5, #ffffff);
+
+  color: #222;
   position: fixed;
   width: 100%;
   top: 0;
   z-index: 1000;
-  backdrop-filter: blur(10px);
-  border-bottom: 1px solid rgba(255,255,255,0.1);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  border-bottom: 1px solid #ddd;
 }
 
-
-/* Logo image */
+/* Logo */
 .logo {
   display: flex;
   align-items: center;
-  gap: 10px;
-  /* Increase base font size */
-  font-size: 2em;
-  font-weight: bold;
-  letter-spacing: 2px;
-  color: #ff00ff;
-  text-shadow: 0 0 10px #ff00ff;
+  gap: 12px;
+  font-size: 1.8em;
+  font-weight: 700;
+  color: #2c3e50;
 }
 
 .logo img {
-  max-width: 80px;       /* larger maximum width */
-  width: min(120px, 12vw); /* responsive sizing: 12vw or 120px whichever is smaller */
+  max-width: 120px;
+  width: min(220px, 12vw);
   height: auto;
   object-fit: contain;
 }
 
-/* Smaller screen adjustments */
-@media (max-width: 768px) {
-  .logo {
-    font-size: 1.5em;
-  }
-  .logo img {
-    max-width: 80px;
-    width: min(80px, 15vw);
-  }
-}
+/* Navigation */
 .nav-links ul {
   list-style: none;
   display: flex;
   align-items: center;
+  gap: 30px;
 }
 
 .nav-links ul li {
-  margin: 0 20px;
+  position: relative;
 }
 
 .nav-links ul li a {
   text-decoration: none;
-  color: #fff;
+  color: #222;
   font-size: 1.1em;
-  position: relative;
-  transition: 0.3s;
+  font-weight: 600;
+  padding: 8px 0;
+  transition: color 0.3s ease;
+  cursor: pointer;
+  display: inline-block;
+  white-space: nowrap;
 }
 
-.nav-links ul li a::after {
-  content: "";
+.nav-links ul li a:hover,
+.nav-links ul li a:focus {
+  color:#222;
+  border-bottom: 2px solid #222;
+}
+
+/* Dropdown Menu */
+.dropdown-menu {
   position: absolute;
-  bottom: -4px;
+  top: 100%;
   left: 0;
-  width: 0;
-  height: 2px;
-  background: #00ffff;
-  transition: 0.3s;
-}
-
-.nav-links ul li a:hover::after {
-  width: 100%;
-}
-
-.nav-links ul li a:hover {
-  color: #00ffff;
-  text-shadow: 0 0 10px #00ffff;
-}
-
-/* Hamburger Menu */
-.hamburger {
+  background: #fff;
+  border: 1px solid #ddd;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  min-width: 180px;
   display: none;
   flex-direction: column;
+  z-index: 1001;
+  border-radius: 6px;
+  padding: 8px 0;
+}
+/* Hide dropdown menu by default */
+.nav-links ul li.dropdown .dropdown-menu {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background: white;
+  border: 1px solid #ddd;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  border-radius: 6px;
+  padding: 10px 0;
+  min-width: 180px;
+  z-index: 1000;
+  flex-direction: column;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+/* Show dropdown menu on hover of parent dropdown */
+.nav-links ul li.dropdown:hover > .dropdown-menu {
+  display: flex;
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* Dropdown menu items styling */
+.dropdown-menu li {
+  padding: 8px 20px;
+  white-space: nowrap;
+}
+
+.dropdown-menu li a {
+  color: #333;
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 0.95rem;
+}
+
+.dropdown-menu li a:hover {
+  background-color: white;
+  border-radius: 4px;
+}
+
+/* Positioning parent li relative for absolute submenu */
+.nav-links ul li.dropdown {
+  position: relative;
+}
+
+.dropdown-menu li {
+  margin: 0;
+}
+
+.dropdown-menu li a {
+  padding: 10px 20px;
+  font-weight: 500;
+  font-size: 0.5em;
+  color: #333;
+  border-bottom: none;
+  display: block;
+}
+
+.dropdown-menu li a:hover,
+.dropdown-menu li a:focus {
+  background-color: #fff;
+  color: #0056b3;
+}
+
+/* Show dropdown on hover */
+.nav-links ul li.dropdown:hover > .dropdown-menu {
+  display: flex;
+}
+
+/* Hamburger Menu (mobile) */
+.hamburger {
   cursor: pointer;
-  width: 30px;
-  height: 20px;
+  display: flex;
+  flex-direction: column;
   justify-content: space-between;
+  width: 30px;
+  height: 25px;
+}
+
+.hamburger .bar {
+  height: 4px;
+  width: 100%;
+  background-color: #333;
+  border-radius: 2px;
+  transition: all 0.3s ease;
+}
+
+/* Transform to "X" when active */
+.hamburger.active .bar:nth-child(1) {
+  transform: rotate(45deg) translate(5px, 5px);
+}
+
+.hamburger.active .bar:nth-child(2) {
+  opacity: 0;
+}
+
+.hamburger.active .bar:nth-child(3) {
+  transform: rotate(-45deg) translate(6px, -6px);
+}
+
+/* nav links visibility */
+.nav-links {
+  display: none; /* hidden by default */
+  transition: all 0.3s ease;
+}
+
+.nav-links.active {
+  display: block;
 }
 
 .hamburger span {
-  background-color: white;
-  height: 4px;
+  background-color: black;
+  height: 3px;
   width: 100%;
   border-radius: 2px;
+}
+
+@media (max-width: 768px) {
+  .hamburger {
+    display: flex;
+  }
+  .nav-links {
+    display: none;
+    position: absolute;
+    top: 55px;
+    left: 0;
+    background-color: white;
+    width: 100%;
+    padding: 20px 0;
+    box-shadow: 0 2px 15px rgba(0,0,0,0.1);
+    flex-direction: column;
+    z-index: 999;
+  }
+  .nav-links.active {
+    display: flex;
+  }
+  .nav-links ul {
+    flex-direction: column;
+    gap: 15px;
+    align-items: center;
+  }
+  .nav-links ul li {
+    margin: 0;
+  }
+  .dropdown-menu {
+    position: static;
+    border: none;
+    box-shadow: none;
+    padding: 0;
+    background: none;
+    display: none !important;
+  }
+  .dropdown-menu li a {
+    padding: 10px 0;
+    font-weight: 600;
+    color: #222;
+  }
+  /* Show dropdown on click in mobile handled by JS (if needed) */
 }
 
 /* Hero Section */
@@ -124,388 +273,280 @@ header {
   display: flex;
   justify-content: center;
   align-items: center;
-  color: white;
+  background-color: white;
+  color: #222;
 }
 
 .hero-bg {
   position: absolute;
   top: 0;
   left: 0;
-  width: 100%;
-  height: 100%;
+ width: 100vw !important;
+  height: 100vh !important;
   object-fit: cover;
-  filter: brightness(60%) saturate(1.2);
-  animation: zoom 20s infinite alternate;
   z-index: 0;
+    margin-left: calc(50% - 50vw);
+  
 }
 
 .hero-content {
   position: relative;
   z-index: 1;
   text-align: center;
-  animation: fadeIn 2s ease;
-  text-shadow: 0 0 20px rgba(0,255,255,0.5);
+  max-width: 700px;
+  padding: 20px;
+  background: rgba(255, 255, 255, 0.85);
+  border-radius: 12px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
 }
 
 .hero-content h1 {
-  font-size: 3.5rem;
+  font-size: 3rem;
   margin-bottom: 20px;
-  color: #00ffff;
-  text-shadow: 0 0 25px #00ffff, 0 0 50px #ff00ff;
-  letter-spacing: 2px;
-}
-
-.hero-content h1 span {
-  color: #ff00ff;
-  text-shadow: 0 0 25px #ff00ff, 0 0 50px #00ffff;
+  color: #2c3e50;
+  font-weight: 700;
+  font-family: "Georgia", serif;
 }
 
 .hero-content p {
   font-size: 1.3rem;
   margin-bottom: 30px;
-  color: #fff;
-  text-shadow: 0 0 15px rgba(0,255,255,0.5);
-}
-
-.events {
-  padding: 80px 20px;
-  text-align: center;
-  background: #111;
-  color: #eee;
-}
-
-.events h2 {
-  font-size: 2.5em;
-  margin-bottom: 20px;
-  color: #00ffff;
-  text-shadow: 0 0 15px #00ffff;
-}
-
-.events .events-intro {
-  max-width: 700px;
-  margin: 0 auto 40px auto;
-  font-size: 1.1rem;
-  color: #ccc;
-}
-
-.events-items {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  gap: 30px;
-  padding: 0 30px;
-}
-
-.event-item {
-  background: #222;
-  border-radius: 12px;
-  overflow: hidden;
-  box-shadow: 0 0 20px rgba(255,0,255,0.1);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.event-item:hover {
-  transform: scale(1.03);
-  box-shadow: 0 0 30px rgba(0,255,255,0.3);
-}
-
-.event-item img {
-  width: 100%;
-  height: 180px;
-  object-fit: cover;
-  display: block;
-}
-
-.event-info {
-  padding: 20px;
-  color: #fff;
-}
-
-.event-info h3 {
-  font-size: 1.4rem;
-  margin-bottom: 10px;
-  color: #ff00ff;
-}
-
-.event-info p {
-  font-size: 1rem;
-  color: #ccc;
-}
-
-/* Responsive tweaks */
-@media (max-width: 768px) {
-  .event-item img {
-    height: 140px;
-  }
-  .events h2 {
-    font-size: 2rem;
-  }
-}
-/* Dropdown parent */
-nav .dropdown {
-  position: relative;
-}
-
-/* Hide the sub‑menu by default */
-nav .dropdown .dropdown-menu {
-  display: none;
-  position: absolute;
-  top: 100%; /* just below parent link */
-  left: 0;
-  background: rgba(10,10,10,0.95);
-  padding: 10px 0;
-  list-style: none;
-  min-width: 180px;
-  border-radius: 6px;
-  z-index: 1000;
-}
-
-/* Style each item in sub‑menu */
-nav .dropdown .dropdown-menu li {
-  margin: 0;
-}
-
-nav .dropdown .dropdown-menu li a {
-  display: block;
-  padding: 8px 20px;
-  color: #fff;
-  text-decoration: none;
-  transition: background 0.3s;
-}
-
-/* Hover/focus effect for sub‑menu items */
-nav .dropdown .dropdown-menu li a:hover {
-  background: #00ffff;
-  color: #000;
-}
-
-/* Show the sub‑menu on hover or when nav‑links is active in mobile */
-nav .dropdown:hover .dropdown-menu,
-nav .dropdown .dropdown-menu.show {
-  display: block;
-}
-
-@media (max-width: 768px) {
-  /* For mobile: make submenu appear as part of nav list */
-  nav .dropdown .dropdown-menu {
-    position: static;
-    background: transparent;
-    padding: 0;
-  }
-  nav .dropdown .dropdown-menu li a {
-    padding: 12px 20px;
-  }
+  color: #444;
+  font-weight: 500;
 }
 
 .hero-content .btn {
-  background: linear-gradient(45deg, #00ffff, #ff00ff);
-  color: #000;
-  padding: 12px 35px;
+  background-color: white;
+  color: #2c3e50;
+  padding: 14px 40px;
   border-radius: 30px;
   text-decoration: none;
   font-weight: 600;
   font-size: 1.1rem;
-  transition: 0.4s;
-  box-shadow: 0 0 20px rgba(0,255,255,0.6);
+  transition: background-color 0.3s ease, transform 0.3s ease;
+  display: inline-block;
 }
 
-.hero-content .btn:hover {
-  transform: scale(1.1);
-  box-shadow: 0 0 35px rgba(255,0,255,0.8);
+.hero-content .btn:hover,
+.hero-content .btn:focus {
+  background-color: white;
+  transform: scale(1.05);
 }
 
-@keyframes zoom {
-  0% { transform: scale(1); }
-  100% { transform: scale(1.1); }
+/* Sections */
+section {
+  padding: 80px 20px;
+
+  margin: 0 auto;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.06);
+  margin-bottom: 60px;
 }
 
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(40px); }
-  to   { opacity: 1; transform: translateY(0); }
+h2 {
+  font-family: "Georgia", serif;
+  font-weight: 700;
+  font-size: 2.6rem;
+  margin-bottom: 30px;
+  color: #2c3e50;
+  text-align: center;
 }
 
 /* Gallery Section */
-.gallery {
-  padding: 80px 0;
-  background: linear-gradient(180deg, #111, #1a1a1a);
-  text-align: center;
-  color: #fff;
+.gallery-items {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 30px;
+  justify-items: center;
+}
+
+.gallery-item {
+  width: 100%;
+  background: #fafafa;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 6px 15px rgba(0,0,0,0.07);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.gallery-item:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 12px 30px rgba(0,0,0,0.12);
 }
 
 .gallery-item img,
 .gallery-item video {
   width: 100%;
-  height: 100%;
+  height: 220px;
   object-fit: cover;
-  object-position: center;
+  border-bottom: 1px solid #ddd;
   display: block;
 }
 
-/* For video specifically: remove controls, fill container */
-.gallery-item video {
-  /* If you set controls in HTML, remove them here: 
-     or in HTML don’t include controls attribute */
-  /* controls: none; (not a valid CSS property; control removal in HTML) */
+.gallery-item p {
+  padding: 15px 20px;
+  color: #444;
+  font-size: 1rem;
+  text-align: center;
+  font-weight: 500;
+  line-height: 1.4;
 }
 
-/* Ensure the container has consistent size */
-.gallery-item {
-  position: relative;
-  overflow: hidden;
-  width: 100%;
-  /* you already have height: 250px; if you want change you can */
-  height: 250px; /* or adjust for mobile */
-}
-
-
-.gallery h2 {
-  font-size: 2.5em;
-  margin-bottom: 40px;
-  color: #ff00ff;
-  text-shadow: 0 0 20px #ff00ff;
-}
-
-.gallery-items {
+/* Event Section Items */
+.events-items {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
   gap: 25px;
-  padding: 0 30px;
+  margin-top: 20px;
 }
 
-.gallery-item {
+.event-item {
+  background: #fafafa;
+  border-radius: 12px;
   overflow: hidden;
-  border-radius: 15px;
-  height: 250px;
-  position: relative;
-  background: #222;
-  box-shadow: 0 0 20px rgba(255,0,255,0.2);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.06);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.gallery-item:hover {
-  transform: scale(1.05);
-  box-shadow: 0 0 25px rgba(0,255,255,0.4);
-}
-
-.gallery-item img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-/* About Section */
-.about {
-  background: #0e0e0e;
-  padding: 80px 20px;
-  text-align: center;
-  color: #fff;
-}
-
-.about h2 {
-  font-size: 2.5em;
-  margin-bottom: 20px;
-  color: #00ffff;
-  text-shadow: 0 0 15px #00ffff;
-}
-
-.about p {
-  max-width: 800px;
-  margin: 0 auto 40px auto;
-  line-height: 1.6;
-  font-size: 1.1rem;
-}
-
-/* Contact Section */
-.contact {
-  background: linear-gradient(180deg, #111, #0a0a0a);
-  padding: 80px 20px;
-  text-align: center;
-  color: #fff;
-}
-
-.contact h2 {
-  font-size: 2.5em;
-  margin-bottom: 20px;
-  color: #ff00ff;
-  text-shadow: 0 0 15px #ff00ff;
-}
-
-.contact form {
-  max-width: 500px;
-  margin: 0 auto;
   display: flex;
   flex-direction: column;
 }
 
-.contact form input,
-.contact form textarea {
-  margin-bottom: 15px;
-  padding: 12px;
-  border: none;
-  border-radius: 8px;
-  background: #222;
-  color: #fff;
-  font-size: 1em;
+.event-item:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 14px 32px rgba(0, 0, 0, 0.1);
 }
 
-.contact form button {
-  padding: 12px;
-  border: none;
-  border-radius: 30px;
-  background: linear-gradient(45deg, #00ffff, #ff00ff);
-  color: #000;
-  font-size: 1.1em;
-  font-weight: bold;
-  cursor: pointer;
-  transition: 0.3s;
+.event-item img {
+  width: 100%;
+  height:100%;
+  object-fit: cover;
+  border-bottom: 1px solid #ddd;
+  display: block;
 }
 
-.contact form button:hover {
-  transform: scale(1.05);
-  box-shadow: 0 0 25px rgba(255,0,255,0.5);
+.event-info {
+  padding: 15px 20px;
+  color: #222;
 }
+
+.event-info h3 {
+  font-size: 1.3rem;
+  color: #0056b3;
+  margin-bottom: 8px;
+  font-weight: 700;
+}
+
+.event-info p {
+  font-size: 1rem;
+  color: #444;
+}
+/* ABOUT SECTION */
+/* Card Container */
+.about-card {
+  display: flex;
+  flex-direction: column;   /* 🔥 Make image + text vertical */
+  align-items: center;
+  gap: 20px;
+  background: #ffffff;
+  padding: 25px;
+  border-radius: 15px;
+  box-shadow: 0 5px 25px rgba(0, 0, 0, 0.12);
+  text-align: center;       /* Center text under image */
+}
+
+/* Image */
+.about-card img {
+  width: 240px;
+  height: 260px;
+  object-fit: cover;
+  border-radius: 12px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+}
+
+/* Text Section */
+.about-info h3 {
+  font-size: 1.5rem;
+  margin-bottom: 10px;
+  color: #222;
+}
+
+.about-info p {
+  font-size: 1.1rem;
+  line-height: 1.6;
+  color: #444;
+  max-width: 30em;
+
+}
+
+/* Responsive for smaller screens */
+@media (max-width: 768px) {
+  .about-card {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .about-card img {
+    width: 80%;
+    max-width: 300px;
+    height: auto;
+  }
+
+  .about-info h3 {
+    margin-top: 15px;
+  }
+}
+
 
 /* Footer */
-.site-footer {
-  background: #222;
-  color: #f4f4f4;
+.site‑footer {
+  background: #f9f9f9;
+  color: #444;
   padding: 60px 20px;
   text-align: center;
+  font-weight: 500;
+  font-size: 0.95rem;
+  box-shadow: inset 0 1px 0 #ddd;
 }
 
 .footer-wrapper {
-  max-width: 800px;
+  max-width: 900px;
   margin: 0 auto;
 }
 
 .footer-heading {
-  font-size: 2rem;
-  margin-bottom: 20px;
-  color: #fff;
+  font-size: 1.8rem;
+  color: #222;
+  margin-bottom: 25px;
+  letter-spacing: 1px;
 }
 
 .footer-contacts {
   display: flex;
   justify-content: center;
-  gap: 40px;
-  margin-bottom: 30px;
+  gap: 50px;
+  margin-bottom: 35px;
   flex-wrap: wrap;
 }
 
 .contact-item {
   display: flex;
   align-items: center;
-  gap: 10px;
-  font-size: 1.1rem;
+  gap: 12px;
+  font-size: 1.15rem;
 }
 
 .contact-item i {
-  font-size: 1.3rem;
+  font-size: 1.4rem;
   color: #5c6bc0;
 }
 
 .contact-item a {
-  color: #f4f4f4;
+  color: #444;
   text-decoration: none;
+  transition: color 0.3s ease;
 }
 
 .contact-item a:hover {
@@ -514,59 +555,39 @@ nav .dropdown .dropdown-menu.show {
 
 .social-icons {
   margin-bottom: 40px;
-  display: flex;
-  justify-content: center;
-  gap: 12px;
 }
 
 .social-icons a {
-  color: #f4f4f4;
-  font-size: 1.5rem;
-  transition: color 0.3s ease;
+  color: #555;
+  font-size: 1.8rem;
+  margin: 0 14px;
+  display: inline-block;
+  transition: color 0.3s ease, transform 0.3s ease;
 }
 
-.social-icons a:hover {
-  color: #5c6bc0;
+.social-icons a:hover,
+.social-icons a:focus {
+  color: #00c6ff;
+  transform: scale(1.2);
 }
 
-.footer-copyright {
+.footer‑copyright {
   font-size: 0.9rem;
-  color: #888;
+  color: #777;
+  margin-top: 20px;
+  line-height: 1.4;
 }
 
-/* Responsive Navigation & general */
+/* Responsive adjustments */
 @media (max-width: 768px) {
-  .hamburger {
-    display: flex;
+  .footer-heading {
+    font-size: 1.5rem;
   }
-  .nav-links {
-    display: none;
-    position: absolute;
-    top: 70px;
-    left: 0;
-    background-color: rgba(10,10,10,0.95);
-    width: 100%;
-    padding: 20px 0;
+  .footer-contacts {
+    gap: 30px;
   }
-  .nav-links.active {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-  .nav-links ul {
-    flex-direction: column;
-  }
-  .nav-links ul li {
-    margin: 15px 0;
-  }
-  .hero-content h1 {
-    font-size: 2.2rem;
-  }
-  .hero-content p {
-    font-size: 1rem;
-  }
-  .hero-content .btn {
-    padding: 10px 25px;
-    font-size: 1rem;
+  .social-icons a {
+    font-size: 1.5rem;
+    margin: 0 10px;
   }
 }

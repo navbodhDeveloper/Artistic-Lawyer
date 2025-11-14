@@ -11,7 +11,7 @@
   <!-- Navigation Bar -->
  <header>
   <div class="logo">
-  <!-- <img src="./Assets/logo.png" alt="Artistic Lawyer Logo"> -->
+<img src="./Assets/logo 2.png" alt="Artistic Lawyer Logo"> 
   <span>Artistic Lawyer</span>
 </div>
 
@@ -32,23 +32,24 @@
     </ul>
   </nav>
   <div class="hamburger" id="hamburger">
-    <span></span>
-    <span></span>
-    <span></span>
-  </div>
+  <span class="bar"></span>
+  <span class="bar"></span>
+  <span class="bar"></span>
+</div>
 </header>
 
 
   <!-- Hero Section -->
   <section id="home" class="hero">
     <video autoplay muted loop playsinline class="hero-bg">
-  <source src="./Assets/12.mp4" type="video/mp4">
+  <source src="./Assets/13.mp4" type="video/mp4"> 
+  
  
 </video>
 
     <div class="hero-content">
       <h1>Welcome to <span>Artistic Lawyer</span></h1>
-      <p>Explore stunning paintings and drawings that bring imagination to life.</p>
+      <p>“Where creation meets curation.”</p>
       <a href="#gallery" class="btn">Explore Gallery</a>
     </div>
   </section>
@@ -62,20 +63,52 @@
   </section>
 
   <!-- About Section -->
-  <section id="about" class="about">
-    <h2>About the Artist</h2>
-    <p>Radhika Rungta is a passionate and imaginative painter whose work draws the viewer into a world of emotion, colour and storytelling. Her journey began with a fascination for light and landscape—transforming everyday moments into striking compositions. Through bold brush-strokes and a rich palette, Radhika captures the interplay between form and feeling, inviting an intimate connection with each viewer. Her artistic vision centres on the harmony between nature, human experience and artistic expression—each piece growing out of lived reflection and creative discovery. With a dedication to craft, authenticity and visual poetry, Radhika brings a unique voice to the art world, inviting you to explore, engage and be inspired.</p>
-  </section>
+<section id="about" class="about">
+  <h2>About the Artist</h2>
+
+  <div class="about-card">
+    <img src="./Assets/owner 2.webp" alt="Radhika Rungta - Artist Portrait" />
+
+    <div class="about-info">
+      <h3>Radhika Rungta</h3>
+      <p>
+        Radhika Rungta is a passionate painter whose work brings emotion, color, 
+        and storytelling to life. Inspired by light and landscape, she transforms 
+        everyday moments into striking compositions. With bold brushstrokes and 
+        a rich palette, Radhika captures the harmony between nature, human 
+        experience, and artistic expression.
+      </p>
+    </div>
+    
+  </div>
+   <div class="about-card">
+    <img src="./Assets/owner.jpg" alt="Radhika Rungta - Artist Portrait" />
+
+    <div class="about-info">
+      <h3>Radhika Rungta</h3>
+      <p>
+        Radhika Rungta is a passionate painter whose work brings emotion, color, 
+        and storytelling to life. Inspired by light and landscape, she transforms 
+        everyday moments into striking compositions. With bold brushstrokes and 
+        a rich palette, Radhika captures the harmony between nature, human 
+        experience, and artistic expression.
+      </p>
+    </div>
+    
+  </div>
+</section>
+
+
 
   <section id="events" class="events">
   <h2>Events & Exhibitions</h2>
   <p class="events-intro">Join us at our upcoming exhibitions, live art sessions and gallery-showcases where you can meet the artist, explore new works and enjoy immersive art experiences.</p>
   <div class="events-items">
     <div class="event-item">
-      <img src="./Assets/event 1.jpg" alt="Art Exhibition 1">
+      <img src="./Assets/event.jpeg" alt="Art Exhibition 1">
       <div class="event-info">
-        <h3>Solo Exhibition: Radhika Rungta</h3>
-        <p>Date: 10 Dec 2025 | Venue: City Art Gallery</p>
+        <h3>Mood Mapping Therapeutic Art Workshop</h3>
+        <p>Date: 21 nov 2025 | Venue: Omaya Gardens</p>
       </div>
     </div>
     <div class="event-item">
@@ -97,31 +130,42 @@
   
 
   <!-- Footer -->
-  <footer class="site-footer" id="contact" >
-    <div class="footer-wrapper">
-      <h3 class="footer-heading">Get in Touch with Us</h3>
-      <div class="footer-contacts">
-        <div class="contact-item"><i class="fas fa-phone"></i> <a href="tel:+911234567890">+91 123-456-7890</a></div>
-        <div class="contact-item"><i class="fas fa-envelope"></i> <a href="mailto:hello@artisticlawyer.com">hello@artisticlawyer.com</a></div>
-      </div>
-      <div class="social-icons">
-        <a href="#" target="_blank"><i class="fab fa-facebook-f"></i></a>
-        <a href="#" target="_blank"><i class="fab fa-instagram"></i></a>
-        <a href="#" target="_blank"><i class="fab fa-snapchat"></i></a>
-
-      </div>
-      <p class="footer-copyright">&copy; 2025 Artistic Lawyer. All rights reserved.</p>
+ <footer class="site‑footer" id="contact">
+  <div class="footer-wrapper">
+    <h3 class="footer-heading">Get in Touch with Us</h3>
+    <div class="footer-contacts">
+      <div class="contact-item"><i class="fas fa-phone"></i> <a href="tel:+911234567890">+91 123‑456‑7890</a></div>
+      <div class="contact-item"><i class="fas fa-envelope"></i> <a href="mailto:hello@artisticlawyer.com">hello@artisticlawyer.com</a></div>
     </div>
-  </footer>
+    <div class="social-icons">
+      <a href="#" target="_blank"><i class="fab fa-facebook-f"></i></a>
+      <a href="#" target="_blank"><i class="fab fa-instagram"></i></a>
+      <a href="#" target="_blank"><i class="fab fa-snapchat"></i></a>
+    </div>
+    <p class="footer‑copyright">&copy; 2025 Artistic Lawyer. All rights reserved.</p>
+  </div>
+</footer>
+
 
   <script src="index.js"></script>
  <script type="module">
-    // Hamburger toggle logic
     const hamburger = document.getElementById('hamburger');
-    const navLinks   = document.getElementById('navLinks');
-    hamburger.addEventListener('click', () => {
-      navLinks.classList.toggle('active');
-    });
+const navLinks = document.getElementById('navLinks');
+const navItems = navLinks.querySelectorAll('a');
+
+// Toggle menu on hamburger click
+hamburger.addEventListener('click', () => {
+  navLinks.classList.toggle('active');
+  hamburger.classList.toggle('active');
+});
+
+// Close menu when a nav link is clicked
+navItems.forEach(item => {
+  item.addEventListener('click', () => {
+    navLinks.classList.remove('active');
+    hamburger.classList.remove('active');
+  });
+});
 
 
       
