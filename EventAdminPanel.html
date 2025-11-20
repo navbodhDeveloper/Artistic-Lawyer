@@ -139,7 +139,7 @@
     const file = form.media.files[0];
     if (!file) return alert('Please select a file');
 
-    const filePath = `public/${file.name.replace(/ /g, '_')}`;
+    const filePath = `public/${Date.now()}_${file.name.replace(/ /g, '_')}`;
     const { data, error: storageError } = await supabaseClient
         .storage
         .from('events-media')
