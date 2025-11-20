@@ -11,7 +11,7 @@
   <!-- Navigation Bar -->
  <header>
   <div class="logo">
-<img src="./Assets/logo 2.png" alt="Artistic Lawyer Logo"> 
+<img src="./Assets/newmainlogo.png" alt="Artistic Lawyer Logo"> 
   <span>Artistic Lawyer</span>
 </div>
 
@@ -20,12 +20,12 @@
       <li><a href="#home">Home</a></li>
       <li><a href="#gallery">Gallery</a></li>
       <li class="dropdown">
-        <a href="#events">Events</a>
-        <ul class="dropdown-menu">
-          <li><a href="#events">Upcoming Events</a></li>
-          <li><a href="#events">Past Events</a></li>
-        </ul>
-      </li>
+    <a href="#events" class="dropdown-toggle">Events</a>
+    <ul class="dropdown-menu">
+        <li><a href="#upcoming-events">Upcoming Events</a></li>
+        <li><a href="#events">Events</a></li>
+    </ul>
+</li>
       <li><a href="#about">About</a></li>
       <li><a href="#contact">Contact</a></li>
       
@@ -41,11 +41,12 @@
 
   <!-- Hero Section -->
   <section id="home" class="hero">
-    <video autoplay muted loop playsinline class="hero-bg">
-  <source src="./Assets/13.mp4" type="video/mp4"> 
+    <!-- <video autoplay muted loop playsinline class="hero-bg">
+  <source src="./Assets/maam.mp4" type="video/mp4"> 
   
  
-</video>
+</video> -->
+<img src="./Assets/2maam.jpg" alt="" class="hero-bg">
 
     <div class="hero-content">
       <h1>Welcome to <span>Artistic Lawyer</span></h1>
@@ -65,37 +66,30 @@
   <!-- About Section -->
 <section id="about" class="about">
   <h2>About the Artist</h2>
+ <div class="about-card">
+    <img src="./Assets/neeluji.jpg" alt="Radhika Rungta - Artist Portrait" />
 
+    <div class="about-info">
+      <h3>Neelu Rungta</h3>
+      <p>
+      
+Neelu Rungta is a devoted homemaker and a lifelong artist whose love for art began in childhood. She completed her fashion designing degree, but her true passion always lay in creating expressive paintings. Over the years, she has mastered the richness of oil painting and continues to craft soulful pieces that reflect her artistic journey. Balancing home and creativity with grace, she still finds time to pour her heart onto canvas. Many of the artworks featured on this website are her beautiful creations, each one a testament to her dedication and talent.
+      </p>
+    </div>
+    
+  </div>
   <div class="about-card">
-    <img src="./Assets/owner 2.webp" alt="Radhika Rungta - Artist Portrait" />
+    <img src="./Assets/radhikaji.jpg" alt="Radhika Rungta - Artist Portrait" />
 
     <div class="about-info">
-      <h3>Radhika Rungta</h3>
+      <h3>Radhika Rungta Agrawal</h3>
       <p>
-        Radhika Rungta is a passionate painter whose work brings emotion, color, 
-        and storytelling to life. Inspired by light and landscape, she transforms 
-        everyday moments into striking compositions. With bold brushstrokes and 
-        a rich palette, Radhika captures the harmony between nature, human 
-        experience, and artistic expression.
+   Radhika Rungta Agrawal is an artist by heart and a lawyer by profession. Inspired by her mother’s beautiful paintings, she developed a deep love for art from childhood. After completing her law graduation in 2020, she rediscovered her passion during the Covid years and began creating again. What started as a personal escape soon grew into a journey of workshops, creativity, and community. Today, she blends her artistic expression with mindful experiences, sharing the joy of art with everyone who connects with her work.
       </p>
     </div>
     
   </div>
-   <div class="about-card">
-    <img src="./Assets/owner.jpg" alt="Radhika Rungta - Artist Portrait" />
-
-    <div class="about-info">
-      <h3>Radhika Rungta</h3>
-      <p>
-        Radhika Rungta is a passionate painter whose work brings emotion, color, 
-        and storytelling to life. Inspired by light and landscape, she transforms 
-        everyday moments into striking compositions. With bold brushstrokes and 
-        a rich palette, Radhika captures the harmony between nature, human 
-        experience, and artistic expression.
-      </p>
-    </div>
-    
-  </div>
+  
 </section>
 
 
@@ -111,23 +105,53 @@
         <p>Date: 21 nov 2025 | Venue: Omaya Gardens</p>
       </div>
     </div>
-    <div class="event-item">
-      <img src="./Assets/event 2.webp" alt="Live Painting Workshop">
-      <div class="event-info">
-        <h3>Live Painting Workshop</h3>
-        <p>Date: 20 Jan 2026 | Venue: Studio 5, Raipur</p>
-      </div>
-    </div>
-    <div class="event-item">
-      <img src="./Assets/event 3.jpg" alt="Art Meet & Greet">
-      <div class="event-info">
-        <h3>Art Meet & Greet Evening</h3>
-        <p>Date: 15 Feb 2026 | Venue: INOX Cinema Lounge</p>
-      </div>
-    </div>
+  
+    
   </div>
 </section>
+
+<section id="upcoming-events" class="events">
+  <h2>Upcoming Events</h2>
+  <p class="events-intro">Stay tuned for exciting workshops, exhibitions, and art experiences coming soon.</p>
+  <div class="events-items">
+    <div class="event-item">
+      <img src="./Assets/event.jpeg" alt="Art Exhibition 1">
+      <div class="event-info">
+        <h3>Mood Mapping Therapeutic Art Workshop</h3>
+        <p>Date: 21 nov 2025 | Venue: Omaya Gardens</p>
+      </div>
+    </div>
+  <!-- <div class="no-events-container">
+    <p class="no-events-message">There are no upcoming events at the moment. Please check back later!</p>
+  </div> -->
+</section>
+
   
+<!-- <section id="upcoming-events" class="events">
+  <h2>Upcoming Events</h2>
+  <p class="events-intro">Explore our upcoming shows, workshops and new exhibitions coming soon.</p>
+
+  <div class="events-items">
+
+    <div class="event-item">
+      <img src="./Assets/upcoming1.jpeg" alt="Upcoming Event 1">
+      <div class="event-info">
+        <h3>Abstract Art Showcase</h3>
+        <p>Date: 10 Jan 2026 | Venue: Lotus Art Studio</p>
+      </div>
+    </div>
+
+    <div class="event-item">
+      <img src="./Assets/upcoming2.jpeg" alt="Upcoming Event 2">
+      <div class="event-info">
+        <h3>Healing Through Colors Workshop</h3>
+        <p>Date: 5 Feb 2026 | Venue: Serenity Hall</p>
+      </div>
+    </div>
+
+  </div>
+</section> -->
+
 
   <!-- Footer -->
  <footer class="site‑footer" id="contact">
@@ -149,24 +173,51 @@
 
   <script src="index.js"></script>
  <script type="module">
-    const hamburger = document.getElementById('hamburger');
+ const hamburger = document.getElementById('hamburger');
 const navLinks = document.getElementById('navLinks');
 const navItems = navLinks.querySelectorAll('a');
 
-// Toggle menu on hamburger click
+const dropdown = document.querySelector('.dropdown');
+const dropdownToggle = dropdown.querySelector('.dropdown-toggle');
+
+
+// Toggle hamburger menu
 hamburger.addEventListener('click', () => {
   navLinks.classList.toggle('active');
   hamburger.classList.toggle('active');
+
+  // FIX: Always close the Events dropdown when menu is opened/closed
+  dropdown.classList.remove('open');
 });
 
-// Close menu when a nav link is clicked
+
+// Close menu when NON-drophdown links are clicked
 navItems.forEach(item => {
-  item.addEventListener('click', () => {
+  item.addEventListener('click', (e) => {
+
+    // If clicking the Events dropdown toggle on mobile → do NOT close menu
+    if (item.classList.contains('dropdown-toggle') && window.innerWidth <= 768) {
+      e.preventDefault();
+      return;
+    }
+
+    // Close menu for all other links
     navLinks.classList.remove('active');
     hamburger.classList.remove('active');
+
+    // Also close the dropdown always
+    dropdown.classList.remove('open');
   });
 });
 
+
+// Toggle dropdown on mobile
+dropdownToggle.addEventListener('click', (e) => {
+  if (window.innerWidth <= 768) {
+    e.preventDefault();
+    dropdown.classList.toggle('open');
+  }
+});
 
       
     import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm';

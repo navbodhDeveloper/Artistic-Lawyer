@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Panel - Upload Event Media</title>
+  <style>
+    /* Reset default styles */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Arial', sans-serif;
+      line-height: 1.6;
+      background-color: #f9f9f9;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    header {
+      background-color: #007BFF;
+      color: #fff;
+      padding: 20px 10px;
+      text-align: center;
+    }
+
+    main {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+    }
+
+    form {
+      background: #fff;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      width: 100%;
+      max-width: 450px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    form h2 {
+      text-align: center;
+      margin-bottom: 20px;
+      color: #333;
+    }
+
+    input, select, button {
+      margin-bottom: 15px;
+      padding: 12px;
+      font-size: 16px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      width: 100%;
+    }
+
+    input:focus, select:focus {
+      outline: none;
+      border-color: #007BFF;
+    }
+
+    button {
+      background-color: #007BFF;
+      color: #fff;
+      border: none;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    button:hover {
+      background-color: #0056b3;
+    }
+
+    footer {
+      background-color: #333;
+      color: #fff;
+      text-align: center;
+      padding: 15px 10px;
+      font-size: 14px;
+    }
+
+    /* Responsive */
+    @media (max-width: 500px) {
+      form {
+        padding: 20px;
+      }
+      input, select, button {
+        font-size: 14px;
+        padding: 10px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>Admin Panel</h1>
+  </header>
+
+  <main>
+    <form id="adminForm">
+      <h2>Upload Event Media</h2>
+      <input type="text" name="title" placeholder="Title" required>
+      <input type="text" name="description" placeholder="Description" required>
+      <input type="file" name="media" accept="image/*,video/*" required>
+      <select name="type" required>
+        <option value="image">Image</option>
+        <option value="video">Video</option>
+      </select>
+      <button type="submit">Upload</button>
+    </form>
+  </main>
+
+  <footer>
+    &copy; 2025 Event Admin Panel. All rights reserved.
+  </footer>
+<script type="module">
+  import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm';
+  const SUPABASE_URL = 'https://mlgfrewzbxifgpagnzhg.supabase.co';
+  const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1sZ2ZyZXd6YnhpZmdwYWduemhnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjM1NTE1NTQsImV4cCI6MjA3OTEyNzU1NH0.apuBurmWAZ6ykA90yMmFcFgRUo61HpLsUeWonLgOswM';
+  const supabaseClient = createClient(SUPABASE_URL, SUPABASE_KEY);
+
+  const form = document.getElementById('adminForm');
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const title = form.title.value;
+    const description = form.description.value;
+    const type = form.type.value;
+    const file = form.media.files[0];
+    if (!file) return alert('Please select a file');
+
+    const filePath = `public/${file.name.replace(/ /g, '_')}`;
+    const { data, error: storageError } = await supabaseClient
+        .storage
+        .from('events-media')
+        .upload(filePath, file, { upsert: true });
+    if (storageError) return alert(storageError.message);
+
+    const { publicUrl } = supabaseClient
+        .storage
+        .from('events-media')
+        .getPublicUrl(filePath);
+
+    const { error: dbError } = await supabaseClient
+        .from('events_images')
+        .insert([{ title, description, type, media_url: publicUrl }]);
+    if (dbError) return alert(dbError.message);
+
+    alert('File uploaded successfully!');
+    form.reset();
+  });
+</script>
+
+</body>
+</html>

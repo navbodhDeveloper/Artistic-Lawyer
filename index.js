@@ -23,7 +23,9 @@ links.forEach(link => {
 
 
 
+
 import { createClient } from '@supabase/supabase-js'
 const supabaseUrl = 'https://dagrgakrvemvbiacgdrr.supabase.co'
 const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRhZ3JnYWtydmVtdmJpYWNnZHJyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjMwMTMwMDAsImV4cCI6MjA3ODU4OTAwMH0.NdDKUbH2UsCdEc9jW2Y-Puwt2Y379QA0vnNkRFH6-jw'
 const supabase = createClient(supabaseUrl, supabaseKey)
+
