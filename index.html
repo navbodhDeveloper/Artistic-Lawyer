@@ -12,7 +12,7 @@
  <header>
   <div class="logo">
 <img src="./Assets/newmainlogo.png" alt="Artistic Lawyer Logo"> 
-  <span>Artistic Lawyer</span>
+  <span><a href="#home">Artistic Lawyer</a></span>
 </div>
 
   <nav class="nav-links" id="navLinks">
@@ -40,7 +40,7 @@
 
 
   <!-- Hero Section -->
-  <section id="home" class="hero">
+  <section id="home" class="hero ">
     <!-- <video autoplay muted loop playsinline class="hero-bg">
   <source src="./Assets/maam.mp4" type="video/mp4"> 
   
@@ -48,7 +48,7 @@
 </video> -->
 <img src="./Assets/2maam.jpg" alt="" class="hero-bg">
 
-    <div class="hero-content">
+    <div class="hero-content fade-in">
       <h1>Welcome to <span>Artistic Lawyer</span></h1>
       <p>“Where creation meets curation.”</p>
       <a href="#gallery" class="btn">Explore Gallery</a>
@@ -56,7 +56,7 @@
   </section>
 
   <!-- Gallery Section -->
-  <section id="gallery" class="gallery animate slide-left">
+  <section id="gallery" class="gallery fade-in">
     <h2>Art Gallery</h2>
     <div class="gallery-items">
       <!-- dynamic items will load here -->
@@ -66,7 +66,7 @@
   <!-- About Section -->
 <section id="about" class="about">
   <h2>About the Artist</h2>
- <div class="about-card">
+ <div class="about-card slide-left">
     <img src="./Assets/neeluji.jpg" alt="Radhika Rungta - Artist Portrait" />
 
     <div class="about-info">
@@ -78,7 +78,7 @@ Neelu Rungta is a devoted homemaker and a lifelong artist whose love for art beg
     </div>
     
   </div>
-  <div class="about-card">
+  <div class="about-card slide-right">
     <img src="./Assets/radhikaji.jpg" alt="Radhika Rungta - Artist Portrait" />
 
     <div class="about-info">
@@ -98,7 +98,7 @@ Neelu Rungta is a devoted homemaker and a lifelong artist whose love for art beg
   <p class="events-intro">Join us at our upcoming exhibitions, live art sessions and gallery-showcases where you can meet the artist, explore new works and enjoy immersive art experiences.</p>
   
   <div class="events-items">
-    <div class="event-item">
+    <div class="event-item slide-left">
       <img src="./Assets/pastevent4.jpeg" alt="Art Exhibition 1">
       <div class="event-info">
         <h3>PAINT WITH A TWIST</h3>
@@ -106,7 +106,7 @@ Neelu Rungta is a devoted homemaker and a lifelong artist whose love for art beg
       </div>
     </div>
 
-    <div class="event-item">
+    <div class="event-item slide-left">
       <img src="./Assets/pastevent3.jpeg" alt="Art Exhibition 2">
       <div class="event-info">
         <h3>PAINT WITH A TWIST</h3>
@@ -114,7 +114,7 @@ Neelu Rungta is a devoted homemaker and a lifelong artist whose love for art beg
       </div>
     </div>
 
-    <div class="event-item">
+    <div class="event-item slide-right">
       <img src="./Assets/pastevent2.jpeg" alt="Art Exhibition 3">
       <div class="event-info">
         <h3>COFFEE PAINTING WORKSHOP</h3>
@@ -122,7 +122,7 @@ Neelu Rungta is a devoted homemaker and a lifelong artist whose love for art beg
       </div>
     </div>
 
-    <div class="event-item">
+    <div class="event-item slide-right">
       <img src="./Assets/pastevent.jpeg" alt="Art Exhibition 4">
       <div class="event-info">
         <h3>SIP & PAINT!</h3>
@@ -130,6 +130,10 @@ Neelu Rungta is a devoted homemaker and a lifelong artist whose love for art beg
       </div>
     </div>
   </div>
+
+  <div class="explore-events-btn-container">
+  <button class="explore-events-btn"><a href="./events-gallery.html">Explore Event Images</a></button>
+</div>
 </section>
 
 
@@ -137,7 +141,7 @@ Neelu Rungta is a devoted homemaker and a lifelong artist whose love for art beg
   <h2>Upcoming Events</h2>
   <p class="events-intro">Stay tuned for exciting workshops, exhibitions, and art experiences coming soon.</p>
   <div class="events-items">
-    <div class="event-item">
+    <div class="event-item slide-left">
       <img src="./Assets/event.jpeg" alt="Art Exhibition 1">
       <div class="event-info">
         <h3>Mood Mapping Therapeutic Art Workshop</h3>
@@ -277,6 +281,36 @@ dropdownToggle.addEventListener('click', (e) => {
     document.addEventListener('DOMContentLoaded', () => {
       loadGallery();
     });
+
+    // Scroll animation
+const faders = document.querySelectorAll('.fade-in, .slide-left, .slide-right');
+
+const appearOptions = {
+  threshold: 0.2,
+  rootMargin: "0px 0px -50px 0px"
+};
+
+const appearOnScroll = new IntersectionObserver(function(entries, observer) {
+  entries.forEach(entry => {
+    if (!entry.isIntersecting) return;
+    entry.target.classList.add('visible');
+    observer.unobserve(entry.target);
+  });
+}, appearOptions);
+
+faders.forEach(fader => {
+  appearOnScroll.observe(fader);
+});
+
+faders.forEach((fader, index) => {
+  fader.style.transitionDelay = `${index * 0.2}s`;
+  appearOnScroll.observe(fader);
+});
+
+window.addEventListener('scroll', () => {
+  const scrolled = window.scrollY;
+  document.querySelector('.hero-bg').style.transform = `translateY(${scrolled * 0.3}px)`;
+});
   </script>
 </body>
 </html>
