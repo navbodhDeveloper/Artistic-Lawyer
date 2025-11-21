@@ -52,7 +52,6 @@ header {
   width: min(220px, 12vw);
   height: auto;
   object-fit: contain;
-  margin-left: -28px;
 }
 
 .logo a{
@@ -195,6 +194,15 @@ header {
 }
 
 @media (max-width: 768px) {
+
+   .logo img {
+    margin-left: 0;
+    width: 90px;
+  }
+
+   header {
+    padding: 0 16px;
+  }
   .hamburger {
     display: flex;
   }
@@ -204,7 +212,7 @@ header {
   .nav-links {
     display: none;
     position: absolute;
-    top: 55px;
+    top: 6em;
     left: 0;
     background-color: white;
     width: 100%;
@@ -575,6 +583,7 @@ display: flex;
   border-radius: 15px;
   box-shadow: 0 5px 25px rgba(0, 0, 0, 0.12);
   text-align: center;
+      margin-bottom: 20px;
 }
 
 .about-card img {
@@ -607,7 +616,7 @@ display: flex;
   }
 
   .about-card img {
-    width: 80%;
+    width: 100%;
     max-width: 300px;
     height: auto;
   }
@@ -618,7 +627,7 @@ display: flex;
 }
 
 /* Footer */
-.site‑footer {
+.site-footer {
   background: #f9f9f9;
   color: #444;
   padding: 60px 20px;
@@ -841,4 +850,9 @@ display: flex;
     font-size: 1rem;
     padding: 10px 20px;
   }
+}
+
+
+html, body {
+  overflow-x: hidden !important;
 }

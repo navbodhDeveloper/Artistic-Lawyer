@@ -21,7 +21,14 @@ links.forEach(link => {
     });
 });
 
-
+window.addEventListener('pageshow', (event) => {
+  if (event.persisted) {
+    // Reinitialize responsive JS
+    navLinks.classList.remove('active');
+    hamburger.classList.remove('active');
+    dropdown.classList.remove('open');
+  }
+});
 
 
 import { createClient } from '@supabase/supabase-js'
