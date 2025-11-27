@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Admin Panel - Upload Event Media</title>
+  <style>
+    /* Your existing styles here */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      font-family: 'Arial', sans-serif;
+      line-height: 1.6;
+      background-color: #f9f9f9;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+    header {
+      background-color: #007BFF;
+      color: #fff;
+      padding: 20px 10px;
+      text-align: center;
+    }
+    main {
+      flex: 1;
+      padding: 20px;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+    form {
+      background: #fff;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      width: 100%;
+      max-width: 450px;
+      display: flex;
+      flex-direction: column;
+      margin-bottom: 40px;
+    }
+    form h2 {
+      text-align: center;
+      margin-bottom: 20px;
+      color: #333;
+    }
+    input, select, button {
+      margin-bottom: 15px;
+      padding: 12px;
+      font-size: 16px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      width: 100%;
+    }
+    input:focus, select:focus {
+      outline: none;
+      border-color: #007BFF;
+    }
+    button {
+      background-color: #007BFF;
+      color: #fff;
+      border: none;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+    button:hover {
+      background-color: #0056b3;
+    }
+    footer {
+      background-color: #333;
+      color: #fff;
+      text-align: center;
+      padding: 15px 10px;
+      font-size: 14px;
+    }
+    /* List styles */
+    #mediaList {
+      background: #fff;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      max-width: 900px;
+      margin: 0 auto 40px;
+    }
+    #mediaList h3 {
+      margin-bottom: 20px;
+      text-align: center;
+      color: #333;
+    }
+    .media-item {
+      display: flex;
+      gap: 15px;
+      align-items: center;
+      border-bottom: 1px solid #ddd;
+      padding: 12px 0;
+    }
+    .media-thumb {
+      width: 80px;
+      height: 60px;
+      object-fit: cover;
+      border-radius: 5px;
+      background: #eee;
+      flex-shrink: 0;
+    }
+    .media-info {
+      flex-grow: 1;
+    }
+    .media-title {
+      font-weight: bold;
+      font-size: 1.1em;
+    }
+    .media-desc {
+      font-size: 0.9em;
+      color: #555;
+    }
+    .media-actions button {
+      margin-left: 8px;
+      padding: 6px 10px;
+      font-size: 0.9em;
+      border-radius: 5px;
+      border: none;
+      cursor: pointer;
+      color: #fff;
+      transition: background-color 0.3s;
+    }
+    .media-actions .edit-btn {
+      background-color: #007bff;
+    }
+    .media-actions .edit-btn:hover {
+      background-color: #0056b3;
+    }
+    .media-actions .delete-btn {
+      background-color: #dc3545;
+    }
+    .media-actions .delete-btn:hover {
+      background-color: #a71d2a;
+    }
+    @media (max-width: 600px) {
+      .media-item {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      .media-thumb {
+        width: 100%;
+        height: auto;
+      }
+      .media-actions {
+        margin-top: 10px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>Admin Panel</h1>
+  </header>
+
+  <main>
+    <form id="adminForm">
+      <h2 id="formTitle">Upload Event Media</h2>
+      <input type="text" name="title" placeholder="Title" />
+      <input type="text" name="description" placeholder="Description"  />
+      <input type="file" name="media" accept="image/*,video/*" />
+      <select name="type" required>
+        <option value="image">Image</option>
+        <option value="video">Video</option>
+      </select>
+      <button type="submit">Upload</button>
+      <button type="button" id="cancelEditBtn" style="display:none; margin-top:-10px; background:#6c757d;">Cancel Edit</button>
+    </form>
+
+    <section id="mediaList">
+      <h3>Uploaded Media</h3>
+      <div id="listContainer">Loading...</div>
+    </section>
+  </main>
+
+  <footer>
+    &copy; 2025 Event Admin Panel. All rights reserved.
+  </footer>
+
+<script type="module">
+  import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm';
+
+  const SUPABASE_URL = 'https://mlgfrewzbxifgpagnzhg.supabase.co';
+  const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1sZ2ZyZXd6YnhpZmdwYWduemhnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjM1NTE1NTQsImV4cCI6MjA3OTEyNzU1NH0.apuBurmWAZ6ykA90yMmFcFgRUo61HpLsUeWonLgOswM';
+  const supabaseClient = createClient(SUPABASE_URL, SUPABASE_KEY);
+
+  const form = document.getElementById('adminForm');
+  const cancelEditBtn = document.getElementById('cancelEditBtn');
+  const listContainer = document.getElementById('listContainer');
+  let editingId = null;
+  let editingFilePath = null; // to track file path if we want to delete old file on update
+
+  // Load and render list of all media
+  async function loadMediaList() {
+    const { data, error } = await supabaseClient
+      .from('events_images')
+      .select('*')
+      .order('created_at', { ascending: false });
+
+    if (error) {
+      listContainer.innerHTML = `Error loading data: ${error.message}`;
+      return;
+    }
+
+    if (!data.length) {
+      listContainer.innerHTML = '<p>No media uploaded yet.</p>';
+      return;
+    }
+
+    listContainer.innerHTML = data.map(item => `
+      <div class="media-item" data-id="${item.id}">
+        ${item.type === 'image'
+          ? `<img class="media-thumb" src="${item.media_url}" alt="${item.title}" />`
+          : `<video class="media-thumb" src="${item.media_url}" controls></video>`
+        }
+        <div class="media-info">
+          <div class="media-title">${item.title}</div>
+          <div class="media-desc">${item.description}</div>
+          <div>Type: ${item.type}</div>
+        </div>
+        <div class="media-actions">
+          <button class="edit-btn" data-id="${item.id}">Edit</button>
+          <button class="delete-btn" data-id="${item.id}" data-filepath="${getFilePathFromUrl(item.media_url)}">Delete</button>
+        </div>
+      </div>
+    `).join('');
+
+    // Attach event listeners for edit/delete buttons
+    document.querySelectorAll('.edit-btn').forEach(btn => btn.addEventListener('click', onEditClick));
+    document.querySelectorAll('.delete-btn').forEach(btn => btn.addEventListener('click', onDeleteClick));
+  }
+
+  // Extract file path from media_url for deleting file from storage
+  function getFilePathFromUrl(url) {
+    // URL format: https://<project>.supabase.co/storage/v1/object/public/events-media/<file-path>
+    const parts = url.split('/storage/v1/object/public/events-media/');
+    return parts.length > 1 ? parts[1] : null;
+  }
+
+  // Handle form submit for upload or update
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    const title = form.title.value.trim();
+    const description = form.description.value.trim();
+    const type = form.type.value;
+    const file = form.media.files[0];
+
+    if (!title || !description) {
+      alert('Title and description are required');
+      return;
+    }
+
+    if (!editingId && !file) {
+      alert('Please select a file to upload');
+      return;
+    }
+
+    try {
+      let publicUrl = null;
+      let filePath = null;
+
+      if (file) {
+        // Upload new file
+        filePath = `public/${Date.now()}_${file.name.replace(/ /g, '_')}`;
+        const { data: uploadData, error: uploadError } = await supabaseClient
+          .storage
+          .from('events-media')
+          .upload(filePath, file, { upsert: true });
+        if (uploadError) throw uploadError;
+
+        const { data: publicUrlData } = supabaseClient
+          .storage
+          .from('events-media')
+          .getPublicUrl(filePath);
+        publicUrl = publicUrlData.publicUrl;
+      }
+
+      if (editingId) {
+        // Update existing record
+        const updateData = {
+          title,
+          description,
+          type,
+        };
+        if (publicUrl) updateData.media_url = publicUrl;
+
+        const { error: updateError } = await supabaseClient
+          .from('events_images')
+          .update(updateData)
+          .eq('id', editingId);
+
+        if (updateError) throw updateError;
+
+        // Delete old file if new file uploaded
+        if (filePath && editingFilePath) {
+          await supabaseClient
+            .storage
+            .from('events-media')
+            .remove([editingFilePath]);
+        }
+
+        alert('Update successful!');
+      } else {
+        // Insert new record
+        const { error: insertError } = await supabaseClient
+          .from('events_images')
+          .insert([{ title, description, type, media_url: publicUrl }]);
+
+        if (insertError) throw insertError;
+
+        alert('Upload successful!');
+      }
+
+      resetForm();
+      loadMediaList();
+
+    } catch (error) {
+      alert('Error: ' + error.message);
+    }
+  });
+
+  // Reset form to initial state
+  function resetForm() {
+    form.title.value = '';
+    form.description.value = '';
+    form.type.value = 'image';
+    form.media.value = '';
+    editingId = null;
+    editingFilePath = null;
+    form.querySelector('h2').textContent = 'Upload Event Media';
+    form.querySelector('button[type="submit"]').textContent = 'Upload';
+    cancelEditBtn.style.display = 'none';
+  }
+
+  // Edit button clicked
+  async function onEditClick(event) {
+    const id = event.target.dataset.id;
+    if (!id) return;
+
+    // Fetch item from DB
+    const { data, error } = await supabaseClient
+      .from('events_images')
+      .select('*')
+      .eq('id', id)
+      .single();
+
+    if (error) {
+      alert('Error fetching item: ' + error.message);
+      return;
+    }
+
+    editingId = data.id;
+    editingFilePath = getFilePathFromUrl(data.media_url);
+
+    form.title.value = data.title;
+    form.description.value = data.description;
+    form.type.value = data.type;
+    form.media.value = ''; // Clear file input (optional)
+    form.querySelector('h2').textContent = 'Edit Event Media';
+    form.querySelector('button[type="submit"]').textContent = 'Update';
+    cancelEditBtn.style.display = 'inline-block';
+  }
+
+  // Cancel edit button clicked
+  cancelEditBtn.addEventListener('click', resetForm);
+
+  // Delete button clicked
+  async function onDeleteClick(event) {
+    const id = event.target.dataset.id;
+    const filePath = event.target.dataset.filepath;
+
+    if (!id) return;
+    if (!confirm('Are you sure you want to delete this item?')) return;
+
+    try {
+      // Delete DB record
+      const { error: deleteError } = await supabaseClient
+        .from('events_images')
+        .delete()
+        .eq('id', id);
+
+      if (deleteError) throw deleteError;
+
+      // Delete file from storage
+      if (filePath) {
+        const { error: storageDeleteError } = await supabaseClient
+          .storage
+          .from('events-media')
+          .remove([filePath]);
+
+        if (storageDeleteError) console.warn('File delete error:', storageDeleteError.message);
+      }
+
+      alert('Deleted successfully!');
+      loadMediaList();
+
+    } catch (error) {
+      alert('Error deleting item: ' + error.message);
+    }
+  }
+
+  // Initial load
+  loadMediaList();
+
+</script>
+
+</body>
+</html>
