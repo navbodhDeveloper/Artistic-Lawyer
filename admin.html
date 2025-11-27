@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Admin Panel – Artistic Lawyer</title>
+  <link rel="stylesheet" href="admin.css">
+</head>
+<body>
+  <h1>Admin Panel</h1>
+
+ <form id="uploadForm">
+  <input type="hidden" name="editId" value="" />
+
+  <input type="text" name="title" placeholder="Title"/><br/>
+
+  <textarea name="description" placeholder="Description"></textarea><br/>
+
+  <input type="file" name="file" /><br/>  <!-- removed `required` so file is optional when editing -->
+
+  <select name="type">
+    <option value="image">Image</option>
+    <option value="video">Video</option>
+  </select><br/>
+
+  <div class="buttons">
+    <button type="submit" id="uploadBtn">Upload</button>
+    <button type="button" id="cancelEditBtn" style="display:none;">Cancel Edit</button>
+  </div>
+</form>
+
+
+  <h2>Existing Artworks</h2>
+  <div id="list"></div>
+
+ <script type="module">
+  import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm';
+
+  const SUPABASE_URL = 'https://dagrgakrvemvbiacgdrr.supabase.co'; 
+  const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRhZ3JnYWtydmVtdmJpYWNnZHJyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjMwMTMwMDAsImV4cCI6MjA3ODU4OTAwMH0.NdDKUbH2UsCdEc9jW2Y-Puwt2Y379QA0vnNkRFH6-jw';  // ← replace this
+  const supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
+
+  async function loadArtworks() {
+    const { data, error } = await supabase
+      .from('artworks')
+      .select('*')
+      .order('created_at', { ascending: false });
+    if (error) {
+      console.error("Error loading artworks:", error);
+      return;
+    }
+    const listDiv = document.getElementById('list');
+    listDiv.innerHTML = data.map(a =>
+      `<div class="item">
+         <strong>${a.title}</strong> (${a.type})<br/>
+         <a href="${a.media_url}" target="_blank">View Media</a><br/>
+         <button onclick="editArt('${a.id}','${encodeURIComponent(a.title)}','${encodeURIComponent(a.description)}','${a.type}','${encodeURIComponent(a.media_url)}')">Edit</button>
+         <button onclick="deleteArt('${a.id}')">Delete</button>
+         <hr/>
+       </div>`
+    ).join('');
+  }
+
+  window.deleteArt = async function(id) {
+    const { error } = await supabase
+      .from('artworks')
+      .delete()
+      .eq('id', id);
+    if (error) {
+      alert("Error deleting: " + error.message);
+      return;
+    }
+    loadArtworks();
+  };
+
+  window.editArt = function(id, titleEnc, descriptionEnc, type, media_urlEnc) {
+    const form = document.getElementById('uploadForm');
+    form.editId.value = id;
+    form.title.value = decodeURIComponent(titleEnc);
+    form.description.value = decodeURIComponent(descriptionEnc);
+    form.type.value = type;
+    document.getElementById('uploadBtn').textContent = 'Save Changes';
+    document.getElementById('cancelEditBtn').style.display = 'inline-block';
+  };
+
+  document.getElementById('cancelEditBtn').addEventListener('click', () => {
+    const form = document.getElementById('uploadForm');
+    form.reset();
+    form.editId.value = '';
+    document.getElementById('uploadBtn').textContent = 'Upload';
+    document.getElementById('cancelEditBtn').style.display = 'none';
+  });
+
+  document.getElementById('uploadForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const form = e.target;
+    const id = form.editId.value;
+    const title = form.title.value;
+    const description = form.description.value;
+    const type = form.type.value;
+    const fileInput = form.file;
+    const file = fileInput.files[0];
+
+    let media_url = null;
+
+    if (file) {
+      const filePath = `${Date.now()}_${file.name}`;
+      const { data: storageData, error: storageError } = await supabase
+        .storage
+        .from('art_media')  // ← ensure your bucket name is exactly correct
+        .upload(filePath, file);
+      if (storageError) {
+        alert("Upload error: " + storageError.message);
+        return;
+      }
+      const { data: publicURLData } = await supabase
+        .storage
+        .from('art_media')
+        .getPublicUrl(filePath);
+      media_url = publicURLData.publicUrl;
+    }
+
+    if (id) {
+      // edit mode
+      const updateData = { title, description, type };
+      if (media_url) {
+        updateData.media_url = media_url;
+      }
+      const { error: updateError } = await supabase
+        .from('artworks')
+        .update(updateData)
+        .eq('id', id);
+      if (updateError) {
+        alert("Update error: " + updateError.message);
+        return;
+      }
+      alert("Changes saved!");
+    } else {
+      // new upload mode
+      if (!file) {
+        alert("Please select a file");
+        return;
+      }
+      const { error: insertError } = await supabase
+        .from('artworks')
+        .insert([{ title, description, media_url, type }]);
+      if (insertError) {
+        alert("Insert error: " + insertError.message);
+        return;
+      }
+      alert("Uploaded successfully!");
+    }
+
+    form.reset();
+    form.editId.value = '';
+    document.getElementById('uploadBtn').textContent = 'Upload';
+    document.getElementById('cancelEditBtn').style.display = 'none';
+    loadArtworks();
+  });
+
+  // initial load
+  loadArtworks();
+</script>
+
+</body>
+</html>

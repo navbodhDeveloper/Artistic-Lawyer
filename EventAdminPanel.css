@@ -1,0 +1,134 @@
+body {
+  font-family: "Inter", Arial, sans-serif;
+  background: #f5f7fa;
+  margin: 0;
+  padding: 20px;
+  color: #2c3e50;
+}
+
+h1, h2 {
+  font-weight: 700;
+  color: #1a1a1a;
+}
+
+input, textarea, button {
+  font-family: inherit;
+}
+
+/* ---------- FORM STYLING ---------- */
+input, textarea {
+  display: block;
+  width: 350px;
+  padding: 10px 12px;
+  margin-bottom: 15px;
+  border: 1px solid #d0d6dd;
+  border-radius: 6px;
+  background: #fff;
+  font-size: 15px;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+input:focus, textarea:focus {
+  border-color: #4a8ef0;
+  box-shadow: 0 0 4px rgba(74, 142, 240, 0.3);
+  outline: none;
+}
+
+textarea {
+  height: 120px;
+  resize: vertical;
+}
+
+/* ---------- BUTTONS ---------- */
+button {
+  padding: 10px 25px;
+  border: none;
+  border-radius: 6px;
+  background: #4a8ef0;
+  color: white;
+  font-size: 15px;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.1s;
+}
+
+button:hover {
+  background: #3b7cda;
+}
+
+button:active {
+  transform: scale(0.97);
+}
+
+/* Delete button */
+.deleteBtn {
+  background: #e74c3c !important;
+}
+
+.deleteBtn:hover {
+  background: #cf3c2e !important;
+}
+
+/* Edit button */
+.editBtn {
+  background: #16a085;
+}
+
+.editBtn:hover {
+  background: #138a72;
+}
+
+/* ---------- EVENT LIST ---------- */
+.events-list {
+  margin-top: 25px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.event-item {
+  background: #ffffff;
+  padding: 18px;
+  border-radius: 10px;
+  border: 1px solid #e1e4e8;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.04);
+}
+
+.event-item img {
+  border-radius: 8px;
+  border: 1px solid #ddd;
+  margin: 10px 0;
+}
+
+.event-item strong {
+  font-size: 18px;
+  color: #2c3e50;
+}
+
+/* Buttons inside event card */
+.event-item button {
+  margin-right: 8px;
+  margin-top: 10px;
+}
+
+/* Error message */
+#errorMsg {
+  color: #e74c3c;
+  font-size: 14px;
+  margin-bottom: 10px;
+}
+
+/* ---------- RESPONSIVE DESIGN ---------- */
+@media (max-width: 600px) {
+  input, textarea {
+    width: 100%;
+  }
+
+  .event-item {
+    padding: 15px;
+  }
+
+  button {
+    width: 100%;
+    margin-bottom: 10px;
+  }
+}

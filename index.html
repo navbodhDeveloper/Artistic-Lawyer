@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Artistic Lawyer</title>
+  <link rel="stylesheet" href="index.css">
+  <script src="index.js" defer></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+  <!-- Navigation Bar -->
+ <header>
+  <div class="logo">
+<img src="./Assets/newmainlogo.png" alt="Artistic Lawyer Logo"> 
+  <span><a href="#home">Artistic Lawyer</a></span>
+</div>
+
+  <nav class="nav-links" id="navLinks">
+    <ul>
+      <li><a href="#home">Home</a></li>
+      <li><a href="#gallery">Gallery</a></li>
+      <li class="dropdown">
+    <a href="#events" class="dropdown-toggle">Events</a>
+    <ul class="dropdown-menu">
+        <li><a href="#upcoming-events">Upcoming Events</a></li>
+        <li><a href="#events">Events</a></li>
+    </ul>
+</li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#contact">Contact</a></li>
+      
+    </ul>
+  </nav>
+  <div class="hamburger" id="hamburger">
+  <span class="bar"></span>
+  <span class="bar"></span>
+  <span class="bar"></span>
+</div>
+</header>
+
+
+  <!-- Hero Section -->
+  <section id="home" class="hero ">
+    <!-- <video autoplay muted loop playsinline class="hero-bg">
+  <source src="./Assets/maam.mp4" type="video/mp4"> 
+  
+ 
+</video> -->
+<img src="./Assets/maam.jpg" alt="" class="hero-bg">
+
+    <div class="hero-content fade-in">
+      <h1>Welcome to <span>Artistic Lawyer</span></h1>
+      <p>“Where creation meets curation.”</p>
+      <a href="#gallery" class="btn">Explore Gallery</a>
+    </div>
+  </section>
+
+  <!-- Gallery Section -->
+  <section id="gallery" class="gallery fade-in">
+    <h2>Art Gallery</h2>
+    <div class="gallery-items">
+      <!-- dynamic items will load here -->
+    </div>
+  </section>
+
+  <!-- About Section -->
+<section id="about" class="about">
+  <h2>About the Artist</h2>
+ <div class="about-card slide-left">
+    <img src="./Assets/neeluji.jpg" alt="Radhika Rungta - Artist Portrait" />
+
+    <div class="about-info">
+      <h3>Neelu Rungta</h3>
+      <p>
+      
+Neelu Rungta is a devoted homemaker and a lifelong artist whose love for art began in childhood. She completed her fashion designing degree, but her true passion always lay in creating expressive paintings. Over the years, she has mastered the richness of oil painting and continues to craft soulful pieces that reflect her artistic journey. Balancing home and creativity with grace, she still finds time to pour her heart onto canvas. Many of the artworks featured on this website are her beautiful creations, each one a testament to her dedication and talent.
+      </p>
+    </div>
+    
+  </div>
+  <div class="about-card slide-right">
+    <img src="./Assets/radhikaji.jpg" alt="Radhika Rungta - Artist Portrait" />
+
+    <div class="about-info">
+      <h3>Radhika Rungta Agrawal</h3>
+      <p>
+   Radhika Rungta Agrawal is an artist by heart and a lawyer by profession. Inspired by her mother’s beautiful paintings, she developed a deep love for art from childhood. After completing her law graduation in 2020, she rediscovered her passion during the Covid years and began creating again. What started as a personal escape soon grew into a journey of workshops, creativity, and community. Today, she blends her artistic expression with mindful experiences, sharing the joy of art with everyone who connects with her work.
+      </p>
+    </div>
+    
+  </div>
+  
+</section>
+
+<section id="events" class="events">
+  <h2>Events & Exhibitions</h2>
+  <p class="events-intro">
+    Take a look back at our past exhibitions, live art sessions, and gallery showcases, 
+    featuring remarkable artworks and memorable experiences with the artists.
+  </p>
+
+  <!-- Dynamic Past Events Will Load Here -->
+  <div class="events-items" id="pastEvents"></div>
+
+  <div class="explore-events-btn-container">
+    <button class="explore-events-btn">
+      <a href="./events-gallery.html" onclick="window.location.href=this.href; return false;">View Event Gallery</a>
+    </button>
+  </div>
+</section>
+
+<section id="UpcomingEvents" class="events">
+  <h2>Upcoming Events</h2>
+  <p class="events-intro">Stay tuned for exciting workshops, exhibitions, and art experiences coming soon.</p>
+
+  <!-- Dynamic Upcoming Events Will Load Here -->
+  <div class="no-events-container" id="upcomingEvents">
+    <p class="no-events-message">There are no upcoming events at the moment. Please check back later!</p>
+  </div>
+</section>
+
+
+  
+<!-- <section id="upcoming-events" class="events">
+  <h2>Upcoming Events</h2>
+  <p class="events-intro">Explore our upcoming shows, workshops and new exhibitions coming soon.</p>
+
+  <div class="events-items">
+
+    <div class="event-item">
+      <img src="./Assets/upcoming1.jpeg" alt="Upcoming Event 1">
+      <div class="event-info">
+        <h3>Abstract Art Showcase</h3>
+        <p>Date: 10 Jan 2026 | Venue: Lotus Art Studio</p>
+      </div>
+    </div>
+
+    <div class="event-item">
+      <img src="./Assets/upcoming2.jpeg" alt="Upcoming Event 2">
+      <div class="event-info">
+        <h3>Healing Through Colors Workshop</h3>
+        <p>Date: 5 Feb 2026 | Venue: Serenity Hall</p>
+      </div>
+    </div>
+
+  </div>
+</section> -->
+
+
+  <!-- Footer -->
+ <footer class="site-footer" id="contact">
+  <div class="footer-wrapper">
+    <h3 class="footer-heading">Get in Touch with Us</h3>
+    <div class="footer-contacts">
+      <div class="contact-item"><i class="fas fa-phone"></i> <a href="tel:+911234567890">+91 7000300676</a></div>
+     
+<div class="contact-item">
+  <i class="fab fa-instagram"></i>
+  <a href="https://www.instagram.com/artistic_lawyer/" target="_blank">@artistic_lawyer</a>
+</div>
+      <div class="contact-item"><i class="fas fa-envelope"></i> <a href="mailto:hello@artisticlawyer.com">artisticlawyer18@gmail.com</a></div>
+    </div>
+
+    <p class="footer‑copyright">&copy; 2025 Artistic Lawyer. All rights reserved.</p>
+  </div>
+</footer>
+
+
+  <script src="index.js"></script>
+ <script type="module">
+ const hamburger = document.getElementById('hamburger');
+const navLinks = document.getElementById('navLinks');
+const navItems = navLinks.querySelectorAll('a');
+
+const dropdown = document.querySelector('.dropdown');
+const dropdownToggle = dropdown.querySelector('.dropdown-toggle');
+
+
+// Toggle hamburger menu
+hamburger.addEventListener('click', () => {
+  navLinks.classList.toggle('active');
+  hamburger.classList.toggle('active');
+
+  // FIX: Always close the Events dropdown when menu is opened/closed
+  dropdown.classList.remove('open');
+});
+
+
+// Close menu when NON-drophdown links are clicked
+navItems.forEach(item => {
+  item.addEventListener('click', (e) => {
+
+    // If clicking the Events dropdown toggle on mobile → do NOT close menu
+    if (item.classList.contains('dropdown-toggle') && window.innerWidth <= 768) {
+      e.preventDefault();
+      return;
+    }
+
+    // Close menu for all other links
+    navLinks.classList.remove('active');
+    hamburger.classList.remove('active');
+
+    // Also close the dropdown always
+    dropdown.classList.remove('open');
+  });
+});
+
+
+// Toggle dropdown on mobile
+dropdownToggle.addEventListener('click', (e) => {
+  if (window.innerWidth <= 768) {
+    e.preventDefault();
+    dropdown.classList.toggle('open');
+  }
+});
+
+      
+    import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm';
+
+    const SUPABASE_URL = 'https://dagrgakrvemvbiacgdrr.supabase.co';      
+    const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRhZ3JnYWtydmVtdmJpYWNnZHJyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjMwMTMwMDAsImV4cCI6MjA3ODU4OTAwMH0.NdDKUbH2UsCdEc9jW2Y-Puwt2Y379QA0vnNkRFH6-jw';           
+    const supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
+
+    async function loadGallery() {
+      const { data, error } = await supabase
+        .from('artworks')
+        .select('*')
+        .order('created_at', { ascending: false });
+
+      if (error) {
+        console.error("Error loading artworks:", error);
+        return;
+      }
+
+      const container = document.querySelector('.gallery-items');
+      container.innerHTML = data.map(a =>
+        `<div class="gallery-item">
+           ${a.type === 'image'
+             ? `<img src="${a.media_url}" alt="${a.title}">`
+             : `<video autoplay muted loop playsinline><source src="${a.media_url} " type="video/mp4"></video>`
+           }
+           <p><strong>${a.title}</strong></p>
+           <p>${a.description}</p>
+         </div>`
+      ).join('');
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      loadGallery();
+    });
+
+    // Scroll animation
+const faders = document.querySelectorAll('.fade-in, .slide-left, .slide-right');
+
+const appearOptions = {
+  threshold: 0.2,
+  rootMargin: "0px 0px -50px 0px"
+};
+
+const appearOnScroll = new IntersectionObserver(function(entries, observer) {
+  entries.forEach(entry => {
+    if (!entry.isIntersecting) return;
+    entry.target.classList.add('visible');
+    observer.unobserve(entry.target);
+  });
+}, appearOptions);
+
+faders.forEach(fader => {
+  appearOnScroll.observe(fader);
+});
+
+faders.forEach((fader, index) => {
+  fader.style.transitionDelay = `${index * 0.2}s`;
+  appearOnScroll.observe(fader);
+});
+
+window.addEventListener('scroll', () => {
+  const scrolled = window.scrollY;
+  document.querySelector('.hero-bg').style.transform = `translateY(${scrolled * 0.3}px)`;
+});
+
+ async function loadPastEvents() {
+    const today = new Date().toISOString().split("T")[0];
+
+    const { data, error } = await supabase
+      .from("events")
+      .select("*")
+      .lt("date", today)  // only past events
+      .order("date", { ascending: false });
+
+    const container = document.getElementById("pastEvents");
+    container.innerHTML = "";
+
+    if (error) return console.error(error);
+
+    data.forEach((event, index) => {
+      const slide = index % 2 === 0 ? "slide-left" : "slide-right";
+      const div = document.createElement("div");
+
+      div.className = `event-item ${slide}`;
+      div.innerHTML = `
+        <img src="${event.image_url}" alt="${event.title}">
+        <div class="event-info">
+          <h3>${event.title}</h3>
+          <p>Date: ${event.date} | Venue: ${event.venue}</p>
+        </div>
+      `;
+
+      container.appendChild(div);
+    });
+  }
+
+  loadPastEvents();
+
+  
+  </script>
+</body>
+</html>
+
+
+
+
+
+
+

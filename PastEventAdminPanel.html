@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Admin Panel - Past Events</title>
+ <link rel="stylesheet" href="./EventAdminPanel.css">
+</head>
+<body>
+
+  <h1>Add Past Event</h1>
+
+  <input type="text" id="title" placeholder="Event Title">
+  <input type="date" id="date">
+  <input type="text" id="venue" placeholder="Venue">
+  <input type="file" id="image_file" accept="image/*">
+  <textarea id="description" placeholder="Description"></textarea>
+
+  <p id="errorMsg" style="color:red; display:none;"></p>
+
+  <button id="addEventBtn">Add Event</button>
+
+  <h2 style="margin-top:40px;">Past Events</h2>
+  <div class="events-list" id="eventsList"></div>
+
+  <script type="module">
+    import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm";
+
+    const supabase = createClient(
+      "https://dagrgakrvemvbiacgdrr.supabase.co",
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRhZ3JnYWtydmVtdmJpYWNnZHJyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjMwMTMwMDAsImV4cCI6MjA3ODU4OTAwMH0.NdDKUbH2UsCdEc9jW2Y-Puwt2Y379QA0vnNkRFH6-jw"
+    );
+
+    /* -------------------------------
+       UPLOAD IMAGE TO SUPABASE
+    --------------------------------*/
+    async function uploadImage(file) {
+      const fileName = `past-${Date.now()}-${file.name}`;
+      const { error } = await supabase.storage
+        .from("event_media")
+        .upload(fileName, file);
+
+      if (error) return null;
+
+      const { data } = supabase.storage
+        .from("event_media")
+        .getPublicUrl(fileName);
+
+      return data.publicUrl;
+    }
+
+    /* -------------------------------
+       FETCH PAST EVENTS
+    --------------------------------*/
+    async function fetchEvents() {
+      const today = new Date().toISOString().split("T")[0];
+
+      const { data } = await supabase
+        .from("events")
+        .select("*")
+        .lt("date", today)
+        .order("date", { ascending: false });
+
+      const list = document.getElementById("eventsList");
+      list.innerHTML = "";
+
+      data.forEach(event => {
+        const div = document.createElement("div");
+        div.className = "event-item";
+
+        div.innerHTML = `
+          <strong>${event.title}</strong><br>
+          Date: ${event.date}<br>
+          Venue: ${event.venue}<br>
+          <img src="${event.image_url}" width="200" style="margin:10px 0;"><br>
+
+          <button class="editBtn"
+            data-id="${event.id}"
+            data-title="${event.title}"
+            data-date="${event.date}"
+            data-venue="${event.venue}"
+            data-description="${event.description}"
+            data-image="${event.image_url}">
+            Edit
+          </button>
+
+          <button class="deleteBtn" data-id="${event.id}" style="background:red; color:white;">
+            Delete
+          </button>
+        `;
+
+        list.appendChild(div);
+
+        // ADD CLICK HANDLERS
+        div.querySelector(".editBtn").addEventListener("click", (e) => {
+          const btn = e.target;
+          startEdit(
+            btn.dataset.id,
+            btn.dataset.title,
+            btn.dataset.date,
+            btn.dataset.venue,
+            btn.dataset.description,
+            btn.dataset.image
+          );
+        });
+
+        div.querySelector(".deleteBtn").addEventListener("click", (e) => {
+          deleteEvent(e.target.dataset.id);
+        });
+      });
+    }
+
+    /* -------------------------------
+       ADD EVENT
+    --------------------------------*/
+    async function addEvent() {
+      const title = document.getElementById("title").value;
+      const date = document.getElementById("date").value;
+      const venue = document.getElementById("venue").value;
+      const description = document.getElementById("description").value;
+      const imageFile = document.getElementById("image_file").files[0];
+      const errorMsg = document.getElementById("errorMsg");
+
+      if (!imageFile) {
+        errorMsg.style.display = "block";
+        errorMsg.textContent = "Please select an image!";
+        return;
+      }
+
+      const image_url = await uploadImage(imageFile);
+      if (!image_url) return alert("Image upload failed.");
+
+      await supabase.from("events").insert([
+        { title, date, venue, description, image_url }
+      ]);
+
+      alert("Event Added!");
+      resetForm();
+      fetchEvents();
+    }
+
+    /* -------------------------------
+       START EDIT MODE
+    --------------------------------*/
+    window.startEdit = function(id, title, date, venue, desc, img) {
+      document.getElementById("title").value = title;
+      document.getElementById("date").value = date;
+      document.getElementById("venue").value = venue;
+      document.getElementById("description").value = desc;
+
+      const addBtn = document.getElementById("addEventBtn");
+      addBtn.textContent = "Update Event";
+      addBtn.onclick = () => updateEvent(id, img);
+    };
+
+    /* -------------------------------
+       UPDATE EVENT
+    --------------------------------*/
+    async function updateEvent(id, oldImageUrl) {
+      const title = document.getElementById("title").value;
+      const date = document.getElementById("date").value;
+      const venue = document.getElementById("venue").value;
+      const description = document.getElementById("description").value;
+
+      let imageFile = document.getElementById("image_file").files[0];
+      let newImageUrl = oldImageUrl;
+
+      if (imageFile) newImageUrl = await uploadImage(imageFile);
+
+      await supabase
+        .from("events")
+        .update({ title, date, venue, description, image_url: newImageUrl })
+        .eq("id", id);
+
+      alert("Event Updated!");
+      resetForm();
+      fetchEvents();
+    }
+
+    /* -------------------------------
+       DELETE EVENT
+    --------------------------------*/
+    window.deleteEvent = async function(id) {
+      if (!confirm("Delete this event?")) return;
+
+      await supabase.from("events").delete().eq("id", id);
+
+      alert("Event Deleted!");
+      fetchEvents();
+    };
+
+    /* -------------------------------
+       RESET FORM
+    --------------------------------*/
+    function resetForm() {
+      document.getElementById("title").value = "";
+      document.getElementById("date").value = "";
+      document.getElementById("venue").value = "";
+      document.getElementById("description").value = "";
+      document.getElementById("image_file").value = "";
+
+      const addBtn = document.getElementById("addEventBtn");
+      addBtn.textContent = "Add Event";
+      addBtn.onclick = addEvent;
+    }
+
+    document.getElementById("addEventBtn").addEventListener("click", addEvent);
+
+    fetchEvents();
+  </script>
+
+</body>
+</html>

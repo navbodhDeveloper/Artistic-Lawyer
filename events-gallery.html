@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link rel="stylesheet" href="event-gallery.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Artistic Lawyer - Events Gallery</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body>
+
+  <!-- Navigation Bar -->
+  <header>
+    <div class="logo">
+      <img src="./Assets/newmainlogo.png" alt="Artistic Lawyer Logo"> 
+      <span>Artistic Lawyer</span>
+    </div>
+     
+    <nav class="nav-links" id="navLinks">
+      <ul>
+        <li><a href="/index.html">Back To Website</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- Events Gallery Section -->
+  <section class="gallery">
+    <h2> Welcome to Artistic Lawyer Event Gallery</h2>
+    <div class="gallery-items" id="eventsGallery"></div>
+  </section>
+
+  <!-- FIXED FOOTER (Corrected hyphens) -->
+  <!-- <footer class="site-footer" id="contact">
+    <div class="footer-wrapper">
+      <h3 class="footer-heading">Get in Touch with Us</h3>
+
+      <div class="footer-contacts">
+        <div class="contact-item"><i class="fas fa-phone"></i> <a href="tel:+917000300676">+91 7000300676</a></div>
+
+        <div class="contact-item">
+          <i class="fab fa-instagram"></i>
+          <a href="https://www.instagram.com/artistic_lawyer/" target="_blank">@artistic_lawyer</a>
+        </div>
+
+        <div class="contact-item"><i class="fas fa-envelope"></i> <a href="mailto:artisticlawyer18@gmail.com">artisticlawyer18@gmail.com</a></div>
+      </div>
+
+      <p class="footer-copyright">
+        &copy; 2025 Artistic Lawyer. All rights reserved.
+      </p>
+    </div>
+  </footer> -->
+
+
+
+  <!-- UPDATED JS WITH media-wrapper FIX -->
+  <script type="module">
+    import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm';
+
+    const SUPABASE_URL = 'https://mlgfrewzbxifgpagnzhg.supabase.co';
+    const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1sZ2ZyZXd6YnhpZmdwYWduemhnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjM1NTE1NTQsImV4cCI6MjA3OTEyNzU1NH0.apuBurmWAZ6ykA90yMmFcFgRUo61HpLsUeWonLgOswM';
+    const supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
+
+    async function loadGallery() {
+      const { data, error } = await supabase
+        .from('events_images')
+        .select('*')
+        .order('created_at', { ascending: false });
+
+      if (error) {
+        console.error("Error loading images:", error);
+        return;
+      }
+
+      const container = document.querySelector('.gallery-items');
+
+      container.innerHTML = data.map(a => `
+        <div class="gallery-item">
+          <div class="media-wrapper">
+            ${a.type === "image" ? `
+              <img src="${a.media_url}" alt="${a.title}">
+            ` : `
+              <video controls>
+                <source src="${a.media_url}" type="video/mp4">
+              </video>
+            `}
+          </div>
+        </div>
+      `).join('');
+    }
+
+    document.addEventListener('DOMContentLoaded', loadGallery);
+  </script>
+
+</body>
+</html>
