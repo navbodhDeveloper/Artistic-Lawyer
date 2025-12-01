@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Artistic Lawyer</title>
@@ -54,6 +55,8 @@
       <p>“Where creation meets curation.”</p>
       <a href="#gallery" class="btn">Explore Gallery</a>
     </div>
+     <div id="ribbons-container" style="position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none;overflow:hidden;"></div>
+</section>
   </section>
 
   <!-- Gallery Section -->
@@ -62,6 +65,9 @@
     <div class="gallery-items">
       <!-- dynamic items will load here -->
     </div>
+
+</div>
+
   </section>
 
   <!-- About Section -->
@@ -70,7 +76,7 @@
  <div class="about-card slide-left">
     <img src="./Assets/neeluji.jpg" alt="Radhika Rungta - Artist Portrait" />
 
-    <div class="about-info">
+    <div class="about-info slide-left">
       <h3>Neelu Rungta</h3>
       <p>
       
@@ -110,16 +116,28 @@ Neelu Rungta is a devoted homemaker and a lifelong artist whose love for art beg
   </div>
 </section>
 
-<section id="UpcomingEvents" class="events">
+<section id="upcoming-events" class="events">
   <h2>Upcoming Events</h2>
   <p class="events-intro">Stay tuned for exciting workshops, exhibitions, and art experiences coming soon.</p>
 
   <!-- Dynamic Upcoming Events Will Load Here -->
-  <div class="no-events-container" id="upcomingEvents">
+  <div class="no-events-container" id="upcoming-events">
     <p class="no-events-message">There are no upcoming events at the moment. Please check back later!</p>
   </div>
 </section>
 
+<!-- BUY NOW POPUP -->
+<!-- <div id="buyNowModal" class="modal">
+  <div class="modal-content">
+    <span class="close-btn">&times;</span>
+
+    <h2>Interested in Buying?</h2>
+    <p>Please reach out:</p>
+
+    <p><strong>📞 Phone:</strong> +91 9876543210</p>
+    <p><strong>📧 Email:</strong> example@email.com</p>
+  </div>
+</div> -->
 
   
 <!-- <section id="upcoming-events" class="events">
@@ -169,6 +187,7 @@ Neelu Rungta is a devoted homemaker and a lifelong artist whose love for art beg
 
   <script src="index.js"></script>
  <script type="module">
+  
  const hamburger = document.getElementById('hamburger');
 const navLinks = document.getElementById('navLinks');
 const navItems = navLinks.querySelectorAll('a');
@@ -221,34 +240,39 @@ dropdownToggle.addEventListener('click', (e) => {
     const SUPABASE_URL = 'https://dagrgakrvemvbiacgdrr.supabase.co';      
     const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImRhZ3JnYWtydmVtdmJpYWNnZHJyIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjMwMTMwMDAsImV4cCI6MjA3ODU4OTAwMH0.NdDKUbH2UsCdEc9jW2Y-Puwt2Y379QA0vnNkRFH6-jw';           
     const supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
+const galleryContainer = document.querySelector('.gallery-items');
 
-    async function loadGallery() {
-      const { data, error } = await supabase
-        .from('artworks')
-        .select('*')
-        .order('created_at', { ascending: false });
+async function loadGallery() {
+  const { data, error } = await supabase
+    .from('artworks')
+    .select('*')
+    .order('created_at', { ascending: false });
 
-      if (error) {
-        console.error("Error loading artworks:", error);
-        return;
+  if (error) {
+    console.error(error);
+    return;
+  }
+
+  if (!data.length) {
+    galleryContainer.innerHTML = `<div class="no-events-message">No artworks yet.</div>`;
+    return;
+  }
+
+  galleryContainer.innerHTML = data.map(a => `
+    <div class="gallery-item">
+      ${a.type === 'image' 
+        ? `<img src="${a.media_url}" alt="${a.title}">`
+        : `<video controls><source src="${a.media_url}" type="video/mp4"></video>`
       }
+      <h3>${a.title}</h3>
+      <p>${a.description}</p>  
 
-      const container = document.querySelector('.gallery-items');
-      container.innerHTML = data.map(a =>
-        `<div class="gallery-item">
-           ${a.type === 'image'
-             ? `<img src="${a.media_url}" alt="${a.title}">`
-             : `<video autoplay muted loop playsinline><source src="${a.media_url} " type="video/mp4"></video>`
-           }
-           <p><strong>${a.title}</strong></p>
-           <p>${a.description}</p>
-         </div>`
-      ).join('');
-    }
+    </div>
+  `).join('');
+}
 
-    document.addEventListener('DOMContentLoaded', () => {
-      loadGallery();
-    });
+// Initial load
+loadGallery();
 
     // Scroll animation
 const faders = document.querySelectorAll('.fade-in, .slide-left, .slide-right');
@@ -313,7 +337,28 @@ window.addEventListener('scroll', () => {
 
   loadPastEvents();
 
-  
+// Get popup
+const modal = document.getElementById("buyNowModal");
+const closeBtn = document.querySelector(".close-btn");
+
+// Listen to clicks on dynamically loaded buy buttons
+document.addEventListener("click", function (event) {
+  if (event.target.classList.contains("buy-now-btn")) {
+    modal.style.display = "flex"; // open popup
+  }
+});
+
+// Close popup
+closeBtn.onclick = () => {
+  modal.style.display = "none";
+};
+
+// Close when clicking outside popup
+window.onclick = (e) => {
+  if (e.target === modal) modal.style.display = "none";
+};
+
+
   </script>
 </body>
 </html>
